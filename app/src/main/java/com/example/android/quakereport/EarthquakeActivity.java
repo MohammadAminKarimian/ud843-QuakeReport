@@ -17,6 +17,8 @@ package com.example.android.quakereport;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,24 +34,19 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.earthquake_activity);
 
         // Create a fake list of earthquake locations.
-        ArrayList<String> earthquakes = new ArrayList<>();
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        ArrayList<MainListItem> earthquakes = new ArrayList<>();
+        earthquakes.add(new MainListItem("San Francisco", "4.5", "july,12/4/2016"));
+        earthquakes.add(new MainListItem("London", "6", "april,4/8/2013"));
+        earthquakes.add(new MainListItem("Tokyo", "7.5", "february,6/12/2019"));
+        earthquakes.add(new MainListItem("MexicoCity", "6", "april,4/8/2013"));
+        earthquakes.add(new MainListItem("Moscow", "3", "april,4/8/2013"));
+        earthquakes.add(new MainListItem("Rio de Janeiro", "4", "february,6/12/2019"));
+        earthquakes.add(new MainListItem("Paris", "3.8", "july,12/4/2016"));
 
-        // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
 
-        // Create a new {@link ArrayAdapter} of earthquakes
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, earthquakes);
-
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MainAdapter(this, earthquakes));
     }
 }
